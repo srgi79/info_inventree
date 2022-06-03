@@ -6,6 +6,7 @@ helpers to easyly run Inventree on Raspberry Pi x64
 
 ## RUN AS A SERVICE IN RPI ##
 - Copy **inventree.service** in **/lib/systemd/system** folder
+- Copy **inventree_worker.service** in **/lib/systemd/system** folder
 - Reaload systemd:
 ~~~
 sudo systemctl daemon-reload
