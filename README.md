@@ -11,11 +11,17 @@ helpers to easyly run Inventree on Raspberry Pi x64
 ~~~
 sudo systemctl daemon-reload
 ~~~
-- Start service:
+- Start services:
 ~~~
 sudo systemctl start inventree.service 
 ~~~
-- If it works, enable the service on boot:
+~~~
+sudo systemctl start inventree_worker.service 
+~~~
+- If it works, enable the services on boot:
 ~~~
 sudo systemctl enable inventree.service 
+~~~
+~~~
+sudo systemctl enable inventree_worker.service 
 ~~~
