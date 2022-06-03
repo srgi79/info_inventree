@@ -1,0 +1,12 @@
+[Unit]
+Description=Inventree Server Service
+Wants=network.target
+After=multi-user.target
+
+[Service]
+User=inventree
+ExecStart=/bin/bash -c 'source home/inventree/env/bin/activate && cd /home/inventree/src && invoke server -a 192.168>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
