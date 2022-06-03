@@ -78,6 +78,7 @@ invoke server -a 192.168.XXX.XXX:8000
 
 
 ## RUN AS A SERVICE IN RPI ##
+- Modify **inventree.service** IP Adress
 - Copy **inventree.service** in **/lib/systemd/system** folder
 - Copy **inventree_worker.service** in **/lib/systemd/system** folder
 - Reload systemd:
