@@ -1,0 +1,13 @@
+[Unit]
+Description=Inventree Worker Service
+Wants=network.target
+After=multi-user.target
+
+[Service]
+User=inventree
+ExecStartPre=/bin/sleep 30
+ExecStart=/bin/bash -c 'source home/inventree/env/bin/activate && cd /home/inventree/src && invoke worker' &
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
