@@ -99,3 +99,21 @@ sudo systemctl enable inventree.service
 ~~~
 sudo systemctl enable inventree_worker.service 
 ~~~
+
+## USEFULL PYTHON SCRIPTS ##
+- Create a python client folder:
+~~~
+mkdir python_client
+cd python_client
+~~~
+- Create a python virtual enviorement and activate it:
+~~~
+python3 -m venv client_env
+source ./client_env/bin/activate
+~~~
+- Copy **CreateLocations.py** and **DeleteAllLocations.py**:
+- Install python client library:
+~~~
+pip install inventree
+~~~
+- Test python scripts
