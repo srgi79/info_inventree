@@ -101,6 +101,7 @@ sudo systemctl enable inventree_worker.service
 ~~~
 
 ## USEFULL PYTHON SCRIPTS ##
+![alt text](https://github.com/srgi79/info_inventree/blob/main/tree.png?raw=true)
 - Create a python client folder:
 ~~~
 mkdir python_client
