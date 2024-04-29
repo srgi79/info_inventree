@@ -1,0 +1,52 @@
+{# stockitem_label_qr_55x29.html #}
+ 
+{% extends "label/label_base.html" %}
+ 
+{% load l10n i18n barcode %}
+ 
+{% block style %}
+ 
+.qr {
+    display: block;
+    height: 27mm;
+    width: 27mm;
+    position: fixed;
+    left: 1mm;
+    top: 1mm;
+}
+ 
+.part {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    position: absolute;
+    {% localize off %}
+    left: {{ height }}mm;
+    {% endlocalize %}
+    top: 2mm;
+}
+ 
+.item {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    position: absolute;
+    {% localize off %}
+    left: {{ height }}mm;
+    {% endlocalize %}
+    bottom: 2mm;
+}
+ 
+{% endblock style %}
+ 
+{% block content %}
+ 
+<img class='qr' alt="{% trans 'QR Code' %}" src='{% qrcode qr_data %}'>
+ 
+<div class='part'>
+    {{ part.full_name }}
+</div>
+
+<div class='item'>
+    {{ item.location.name }}
+</div>
+ 
+{% endblock content %}
