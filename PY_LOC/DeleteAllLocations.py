@@ -6,7 +6,7 @@ from inventree.api import InvenTreeAPI
 from inventree.stock import StockLocation
 import yaml
 
-with open('_Categories.yaml', 'r') as file:
+with open('_Locations.yaml', 'r') as file:
     cfg = yaml.safe_load(file)
 
 api = InvenTreeAPI(cfg['SERVER']['URL'], username=cfg['SERVER']['USER'], password=cfg['SERVER']['PWD'])
