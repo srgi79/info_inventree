@@ -1,0 +1,50 @@
+
+SERVER:
+  URL: 'http://10.0.0.150:80'
+  USER: ''
+  PWD: ''
+
+CAT:
+  Electronics: 
+    DESC: 'Electronic components and systems'
+    Connectors: 
+      DESC: 'Connectors, pin headers, etc'
+      Pin Headers: 
+        DESC: 'Pin headers and sockets'
+    IC: 
+      DESC: 'Integrated Circuits'
+      MCU: 
+        DESC: 'Microcontrollers and processors'
+      Interface: 
+        DESC: 'Drivers, receivers, transceivers'
+    Passives: 
+      DESC: 'Passive components'
+      Capacitors:
+        DESC: 'Capacitors'
+      Inductors:
+        DESC: 'Inductors'
+      Resistors:
+        DESC: 'Resistors'
+    PCB: 
+      DESC: 'Printed circuit boards'
+    PCBA: 
+      DESC: 'PCB assemblies'
+    Wire: 
+      DESC: 'Electronic wire and cables'
+  Furniture:
+    DESC: 'Furniture and associated things'
+    Chairs:
+      DESC: ''
+    Tables:
+      DESC: ''
+  Mechanical:
+    DESC: 'Mechanical components'
+    Enclosures:
+      DESC: 'Enclosures, boxes, etc'
+    Fasteners:
+      DESC: 'Screws / nuts / bolts / etc'
+    Widgets:
+      DESC: 'Odds and ends, doo-hickeys, etc'
+    Paint:
+      DESC: 'Paints, inks, etc'
+
