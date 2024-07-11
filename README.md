@@ -1,120 +1,69 @@
 # info_inventree
-Helpers to easyly run Inventree on Raspberry Pi OS Lite x64
+Helpers to easyly start with Inventree (Docker) on Debian
 
-## INSTALATION
+## DOCKER INSTALATION
 ~~~
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install \
-    python3 python3-dev python3-pip python3-invoke python3-venv \
-    git gcc g++ gettext gnupg \
-    poppler-utils libpango-1.0-0 libpangoft2-1.0-0 \
-    libjpeg-dev webp pango1.0-tools \
-    python3-pip libpango-1.0-0 libpangoft2-1.0-0 -y 
-sudo reboot
-~~~
-### Check if python and pango are already installed
-~~~
-python3 --version
-pango-view --version
-~~~
-### Create required folders
-~~~
-mkdir log static data
-~~~
-### Get files and python packages
-~~~
-git clone https://github.com/inventree/inventree src
-python3 -m venv env
-source ./env/bin/activate
-pip3 install weasyprint psycopg2 pgcli
-weasyprint --info
-pip install -U -r src/requirements.txt
-deactivate 
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ~~~
 
-### Install PostgreSQL
+## DOCKER CONFIG
 ~~~
-sudo apt-get install postgresql postgresql-contrib libpq-dev -y
-sudo service postgresql start
-sudo service postgresql enable
-sudo -u postgres psql
-~~~
-When PostgreSQL cli runs:
-~~~
-create database inventree;
-create user user with encrypted password 'password';
-grant all privileges on database inventree to user;
-exit
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
 ~~~
 
-### Configure Inventree configuration
+## PORTAINER INSTALATION
 ~~~
-cp /home/inventree/src/InvenTree/config_template.yaml /home/inventree/src/InvenTree/config.yaml
-nano /home/inventree/src/InvenTree/config.yaml
-~~~
-Modify PostgreeSQL configuration:
-~~~
-ENGINE: postgresql
-NAME: inventree
-USER: user
-PASSWORD: password
-HOST: 'localhost'
-PORT: '5432'
+sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg2 -y
+docker volume create portainer_data
+docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ~~~
 
-### Execute first run
+## INVENTREE INSTALATION
 ~~~
-cd ~
-source ./env/bin/activate
-cd src
-invoke update
+wget https://raw.githubusercontent.com/inventree/InvenTree/master/contrib/container/docker-compose.yml
+wget https://raw.githubusercontent.com/inventree/InvenTree/master/contrib/container/.env
+wget https://raw.githubusercontent.com/inventree/InvenTree/master/contrib/container/Caddyfile
 ~~~
-Create admin user
+### Edit .env file
 ~~~
-invoke superuser
-invoke server -a 192.168.XXX.XXX:8000
+nano .env
+~~~
+### Edit .env file. Un-comment admin account details and change INVENTREE_SITE_URL
+~~~
+INVENTREE_SITE_URL="http://10.0.0.150"
+~~~
+### Initialize server
+~~~
+docker compose run --rm inventree-server invoke update
+~~~
+### Start all containers
+~~~
+docker compose up -d
+~~~
+### EXTRA: Get demo data
+~~~
+docker compose down
+docker compose run --rm inventree-server invoke setup-test -i
+~~~
+### EXTRA: Delete data
+~~~
+docker compose down
+docker compose run --rm inventree-server invoke delete-data
 ~~~
 
 
-## RUN AS A SERVICE IN RPI ##
-- Modify **inventree.service** IP Adress
-- Copy **inventree.service** in **/lib/systemd/system** folder
-- Copy **inventree_worker.service** in **/lib/systemd/system** folder
-- Reload systemd:
-~~~
-sudo systemctl daemon-reload
-~~~
-- Start services:
-~~~
-sudo systemctl start inventree.service 
-~~~
-~~~
-sudo systemctl start inventree_worker.service 
-~~~
-- If they works, enable the services on boot:
-~~~
-sudo systemctl enable inventree.service 
-~~~
-~~~
-sudo systemctl enable inventree_worker.service 
-~~~
-
-## USEFULL PYTHON SCRIPTS ##
-![Tree](https://github.com/srgi79/info_inventree/blob/main/Tree.png?raw=true)
-- Create a python client folder:
-~~~
-mkdir python_client
-cd python_client
-~~~
-- Create a python virtual enviorement and activate it:
-~~~
-python3 -m venv client_env
-source ./client_env/bin/activate
-~~~
-- Copy **CreateLocations.py** and **DeleteAllLocations.py**:
-- Install python client library:
-~~~
-pip install inventree
-~~~
 - Test python scripts
