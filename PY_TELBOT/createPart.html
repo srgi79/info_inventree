@@ -1,0 +1,182 @@
+<head>
+    <title>Telegram Bot WebApp</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="MobileOptimized" content="176"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
+            font-size: 16px;
+            margin: 0;
+            padding: 0;
+            color-scheme: var(--tg-color-scheme);
+        }
+
+        a {
+            color: var(--tg-theme-link-color, #2678b6);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            font-size: 14px;
+            margin: 15px 0;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            cursor: pointer;
+        }
+
+        button[disabled] {
+            opacity: 0.6;
+            cursor: auto;
+            pointer-events: none;
+        }
+
+        section {
+            padding: 15px 15px 65px;
+            text-align: center;
+        }
+
+        p {
+            margin: 40px 0 15px;
+        }
+
+        ul {
+            text-align: left;
+        }
+
+        li {
+            color: var(--tg-theme-hint-color, #a8a8a8);
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 7px;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, .07);
+            border-radius: 4px;
+            padding: 4px;
+            margin: 7px 0;
+            word-break: break-word;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        .dark pre {
+            background: rgba(255, 255, 255, .15);
+        }
+
+        .ok {
+            color: green;
+        }
+
+        .err {
+            color: red;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<section>
+
+    <h3>Telegram Bot WebApp</h3>
+
+    <hr>
+
+    <h4>Create Part</h4>
+
+    <form>
+        <label for="Field1"></label>
+        <input id="Field1" type="text" placeholder="Field1">
+
+        <label for="Field2"></label>
+        <input id="Field2" type="text" placeholder="Field2">
+
+        <button type="button" id=btnCreatePart>HTML CREATE PART BUTTON</button>
+    </form>
+
+</section>
+
+<script type="text/javascript">
+
+    // INIT TELEGRAM WEB APP
+    Telegram.WebApp.ready();
+
+    // INIT DATA
+    {
+        var data = {};
+    }
+
+
+    // FUNCTION - SEND DATA
+    function sendData(b) {
+        if (b = true) {
+            Telegram.WebApp.sendData(JSON.stringify(data));
+            Telegram.WebApp.close();
+        } else {
+            Telegram.WebApp.sendData(JSON.stringify({}));
+            Telegram.WebApp.close();
+        }
+    }
+
+    // TELEGRAM BUTTON
+    Telegram.WebApp.MainButton.setText('TELEGRAM BUTTON').show().onClick(function () {
+
+        f1 = document.getElementById("Field1").value;
+        f2 = document.getElementById("Field2").value;
+
+        data = {field1: f1, field2: f2};
+
+        data.btn = "TELEGRAM";
+        console.log(data);
+
+        Telegram.WebApp.showConfirm("[TELEGRAM] Are U sure?", (confirm) => {
+            sendData(confirm);
+        });
+    });
+
+    // INIT HTML BUTTON
+    document.getElementById("btnCreatePart").onclick = function() {btnFunc()};
+    // HTML BUTTON
+    function btnFunc() {
+
+        f1 = document.getElementById("Field1").value;
+        f2 = document.getElementById("Field2").value;
+
+        data = {field1: f1, field2: f2};
+
+        data.btn = "HTML";
+        console.log(data);
+
+        Telegram.WebApp.showConfirm("[HTML] Are U sure?", (confirm) => {
+            sendData(confirm);
+        });
+    }
+
+</script>
+</body>
+
+<script type="text/javascript">
+    Telegram.WebApp.expand();
+</script>
